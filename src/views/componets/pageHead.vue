@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="head">
-            <h1>{{headName}}</h1>
+            <h1>{{name}}</h1>
         </div>
         <hr class="hrHead">
     </div>
@@ -9,14 +9,14 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
-export default class Personal extends Vue {
-@Prop({})
-headName!: string
+@Component({
+  components: {
+  }
+})
+export default class PageHead extends Vue {
 
-// @Watdc('name')
-// private asd() {
-//     console.log()
-// }
+    @Prop({ default: "xxx" })
+    private name!: string;
 
 }
 </script>
