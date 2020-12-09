@@ -19,9 +19,6 @@ import pageHead from '@/views/componets/pageHead.vue';
 export default class Personal extends Vue {
 private headName: string = "个人中心"
 
-private mounted() {
-  console.log(this.headName)
-}
 }
 </script>
 
