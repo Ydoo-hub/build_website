@@ -19,6 +19,6 @@ import Login from '@/views/Login.vue';
   },
 })
 export default class  extends Vue {
-	private isLogin: boolean = true;
+	private isLogin: boolean = false;
 }
 </script>
