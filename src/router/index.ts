@@ -29,6 +29,11 @@ const routes: Array<RouteConfig> = [
     path: '/bottom',
     name: 'Bottom',
     component: () => import(/* webpackChunkName: "about" */ '../views/Bottom.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   }
 ]
 

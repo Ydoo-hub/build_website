@@ -23,3 +23,19 @@ export const validateNewPasswordAgain = (accountForm: any) => (rule: any, value:
         callback();
     }
 };
+
+export const validateLoginName = (loginInfo: any) => (rule: any, value: any, callback: any) => {
+    if (loginInfo.name === '') {
+        callback(new Error('请输入账号'));
+    } else {
+        callback();
+    }
+};
+
+export const validatePassword = (loginInfo: any) => (rule: any, value: any, callback: any) => {
+    if (loginInfo.password === '') {
+        callback(new Error('请输入密码'));
+    } else {
+        callback();
+    }
+};

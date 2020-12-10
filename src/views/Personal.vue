@@ -23,6 +23,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import PageHead from '@/views/componets/pageHead.vue';
 import EditAccount from '@/views/componets/EditAccount.vue';
+// import { login } from '@/api/admin.ts'
 
 @Component({
   components: {
@@ -36,8 +37,18 @@ export default class Personal extends Vue {
   private show: boolean = false;
 
   private showEditAccountModal() {
+    // const data: any = {
+    //   username: '123',
+    //   password: '323456'
+    // }
+    // login(data)
+    //   .then((res: any) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err: any) => {
+    //     console.log(err);
+    //   })
     this.show = true;
-    console.log(this.show);
   }
 }
 </script>
