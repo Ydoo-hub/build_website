@@ -1,80 +1,122 @@
 <template>
   <div class="nav">
-      <div>
-        <PageHead 
-          :name="headName"
-        >
-        </PageHead>
-		<h3> 导航栏模板： </h3>
-		<div class="dh">
-			<img src='../assets/noPic.png'>
-			<a> 首页 </a>
-			<a> 视频介绍 </a>
-			<a> 公司简介 </a>
-			<a> 价格方案 </a>
-			<div class="right">
-				<Button> 登录 </Button>
-				<Button> 注册 </Button>
-			</div>
-		</div>
-		<h3> 编辑您的导航栏： </h3>
-		<div class="editdh">
-	        <div class="leftdh">
-				<div> <!-- 这里价格v-for遍历结果 -->
-					<EidtNav
-						:text="aaaa"
-					>
-					</EidtNav>
+		<div>
+			<PageHead 
+			:name="headName"
+			>
+			</PageHead>
+			<h3> 导航栏模板： </h3>
+			<div class="dh">
+				<img src='../assets/noPic.png'>
+				<a> 首页 </a>
+				<Dropdown>
+					<a href="javascript:void(0)">
+						1234
+						<Icon type="ios-arrow-down"></Icon>
+					</a>
+					<DropdownMenu slot="list">
+						<DropdownItem>
+							1
+						</DropdownItem>
+						<DropdownItem>
+							2
+						</DropdownItem>
+						<DropdownItem>
+							3
+						</DropdownItem>
+						<DropdownItem>
+							4
+						</DropdownItem>
+					</DropdownMenu>
+				</Dropdown>
+				<div class="right">
+					<Button> 登录 </Button>
+					<Button> 注册 </Button>
 				</div>
-				<div> <!-- 这里价格v-for遍历结果 -->
-					<EidtNav
-						:text="bbbb"
-					>
-					</EidtNav>
-				</div>
-				<Icon 
-					type="ios-add-circle-outline"
-					size="40"
-					color="rgb(61,92,237)"
-				/>
-	        </div>
-			<div class="rightdh">
-				
-				<Icon 
-					type="ios-add-circle-outline"
-					size="40"
-					color="rgb(61,92,237)"
-				/>
 			</div>
+			<h3> 编辑您的导航栏： </h3>
+			<div class="editdh">
+				<div class="leftdh">
+					<div
+						:key="index"
+						v-for="(item, index) in editArray"
+					> <!-- 这里价格v-for遍历结果 -->
+						<EidtNav
+							:text="item"
+						>
+						</EidtNav>
+					</div>
+
+					<Icon 
+						type="ios-add-circle-outline"
+						size="40"
+						color="rgb(61,92,237)"
+						class="addNav"
+						@click="showNavChooseModal"
+					/>
+				</div>
+				<div class="rightdh">
+					
+					<Icon 
+						type="ios-add-circle-outline"
+						size="40"
+						color="rgb(61,92,237)"
+						class="addNav"
+					/>
+				</div>
+			</div>
+			<ShowNavChooseModal
+				:show.sync="show"
+			>
+			</ShowNavChooseModal>
 		</div>
-      </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import PageHead from '@/views/componets/pageHead.vue';
 import EidtNav from '@/views/componets/EditNav.vue';
+import ShowNavChooseModal from '@/views/componets/ShowNavChooseModal.vue';
+
 // import { login } from '@/api/admin.ts'
 
 @Component({
   components: {
 	PageHead,
-	EidtNav
+	EidtNav,
+	ShowNavChooseModal
   },
 })
 export default class Personal extends Vue {
 	private headName: string = "页面导航";
 
-	private aaaa: {} = {
-		status: 2,
-		text: ['1234']
+	private editArray: any = [
+		{
+			id: 110,
+			status: 2,
+			text: ['1234']
+		},
+		{
+			id: 111,
+			status: 3,
+			text: ['1234','1','2','3','4']
+		}
+	];
+
+	private show: boolean = false;
+
+	private mounted () {
+		const editObj: any = {}
+		editObj.status = 1;
+		editObj.text = []
+
+		this.editArray.push(editObj);
+		console.log(this.editArray);
 	}
 
-	private bbbb: {} = {
-		status: 3,
-		text: ['1234','1','2','3','4']
+	private showNavChooseModal() {
+		this.show = true;
 	}
-
 }
 </script>
 
@@ -126,7 +168,7 @@ export default class Personal extends Vue {
 		display: flex;
 		.leftdh {
 			width: 75%;
-			padding-top: 12px;
+			// padding-top: 12px;
 			display: flex;
 			justify-content: flex-start;
 			// div {
@@ -135,11 +177,16 @@ export default class Personal extends Vue {
 		}
 		.rightdh {
 			width: 25%;
-			padding-top: 12px;
 			display: flex;
 			justify-content: flex-end;
 		}
 
+	}
+	div {
+		.addNav {
+			margin-top: 13px;
+			cursor: pointer;
+		}
 	}
 }
 </style>

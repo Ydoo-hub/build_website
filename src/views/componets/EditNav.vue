@@ -1,11 +1,15 @@
 <template>
     <div class="navborder">
         <div
-            class="border"
+            class="borderImg"
             v-if="text.status === 1"
         >
-            <img src='https://www.baidu.com/img/flexible/logo/pc/result.png' height="100%"/>
-            <Icon type="ios-close-circle-outline" class="del" />
+            <img src='https://img-blog.csdnimg.cn/20181116160709588.png' height="96%"/>
+            <Icon
+                type="ios-close-circle-outline"
+                class="del"
+                @click="delNav()"
+            />
         </div>
         <div 
             class="border"
@@ -14,7 +18,11 @@
             <a>
                 {{text.text[0]}}
             </a>
-            <Icon type="ios-close-circle-outline" class="del" />
+            <Icon
+                type="ios-close-circle-outline"
+                class="del"
+                @click="delNav()"
+            />
         </div>
         <div 
             class="border"
@@ -34,7 +42,11 @@
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-            <Icon type="ios-close-circle-outline" class="del" />
+            <Icon
+                type="ios-close-circle-outline"
+                @click="delNav()"
+                class="del"
+            />
         </div>
     </div>
 </template>
@@ -52,6 +64,11 @@ export default class EditNav extends Vue {
     private mounted() {
         console.log(this.text);
     }
+
+    private delNav() {
+        const that: any = this;
+        console.log('this',that.text.id)
+    }
 }
 </script>
 
@@ -59,12 +76,27 @@ export default class EditNav extends Vue {
 .navborder {
     
     .border {
-        margin-top: 6px;
+        margin-top: 20px;
         padding: 3px 8px;
         border: 1px solid #cccccc;
         margin-right: 10px;
         position: relative;
         border-radius: 6px;
+        .del {
+            color: red;
+            font-weight: 800;
+            position: absolute;
+            top: -6px;
+            right: -8px;
+        }
+    }
+    .borderImg {
+        padding: 3px 8px;
+        border: 1px solid #cccccc;
+        margin-right: 10px;
+        position: relative;
+        border-radius: 6px;
+        height: 66px;
         .del {
             color: red;
             font-weight: 800;
