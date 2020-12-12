@@ -4,7 +4,7 @@
             class="borderImg"
             v-if="text.status === 1"
         >
-            <img src='https://img-blog.csdnimg.cn/20181116160709588.png' height="96%"/>
+            <img :src="imgUrl" height="96%"/>
             <Icon
                 type="ios-close-circle-outline"
                 class="del"
@@ -26,7 +26,7 @@
         </div>
         <div 
             class="border"
-            v-else
+            v-else-if="text.status === 3"
         >
             <Dropdown>
                 <a href="javascript:void(0)">
@@ -48,6 +48,20 @@
                 class="del"
             />
         </div>
+        <div 
+            class="border"
+            style="margin-top:14px"
+            v-else
+        >
+            <Button>
+                {{text.text[0]}}
+            </Button>
+            <Icon
+                type="ios-close-circle-outline"
+                class="del"
+                @click="delNav()"
+            />
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -61,13 +75,17 @@ export default class EditNav extends Vue {
     @Prop({ default: "xxx" })
     private text!: {};
 
-    private mounted() {
-        console.log(this.text);
+    private imgUrl: any = '';
+
+    private created() {
+        // console.log(this.text.text);
+        const that = this
+        that.imgUrl = (that.text as any).text[0]
     }
 
     private delNav() {
         const that: any = this;
-        console.log('this',that.text.id)
+        that.$emit('del', that.text.id);
     }
 }
 </script>
@@ -76,10 +94,10 @@ export default class EditNav extends Vue {
 .navborder {
     
     .border {
-        margin-top: 20px;
         padding: 3px 8px;
         border: 1px solid #cccccc;
-        margin-right: 10px;
+        margin: 0px 5px;
+        margin-top: 20px;
         position: relative;
         border-radius: 6px;
         .del {

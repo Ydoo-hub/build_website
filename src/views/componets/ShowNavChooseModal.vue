@@ -6,7 +6,10 @@
             @on-visible-change="resetNavModal()"
             class="navModal"
         >
-            <div class="top">
+            <div
+                class="top"
+                v-if="!isNext"
+            >
                 <div
                     class="itemborder" 
                     :class="{'isChoose': isChoose === '1'}"
@@ -36,106 +39,122 @@
                     <img src="../../assets/btn.png" title="按钮" width="100%">
                 </div>
             </div>
-            <div
-                v-show="isChoose === '1'"
-                class="step"
-            >
-                <template>
-                    <Upload
-                        multiple
-                        type="drag"
-                        action="//jsonplaceholder.typicode.com/posts/"
+            <div v-else>
+                <div
+                    v-show="isChoose === '1'"
+                    class="step"
+                >
+                    <template>
+                        <Upload
+                            multiple
+                            type="drag"
+                            action="//jsonplaceholder.typicode.com/posts/"
+                        >
+                            <div style="padding: 20px 0;">
+                                <Icon
+                                    type="ios-cloud-upload"
+                                    size="52"
+                                    style="color: #3399ff"
+                                >
+                                </Icon>
+                                <p>Click or drag files here to upload</p>
+                            </div>
+                        </Upload>
+                    </template>
+                </div>
+                <div
+                    class="step"
+                    v-show="isChoose === '2'"
+                >
+                    <Form
+                        :model="tab"
+                        label-position="right"
+                        :label-width="100"
                     >
-                        <div style="padding: 20px 0;">
-                            <Icon
-                                type="ios-cloud-upload"
-                                size="52"
-                                style="color: #3399ff"
-                            >
-                            </Icon>
-                            <p>Click or drag files here to upload</p>
-                        </div>
-                    </Upload>
-                </template>
-            </div>
-            <div
-                class="step"
-                v-show="isChoose === '2'"
-            >
-                <Form
-                    :model="tab"
-                    label-position="right"
-                    :label-width="100"
+                        <FormItem label="输入标签页">
+                            <Input
+                                v-model="tab.bqyName"
+                                placeholder="标签页名称"
+                            />
+                        </FormItem>
+                        <FormItem label="输入跳转路由">
+                            <Input
+                                v-model="tab.router"
+                                placeholder="（/ + 路由名称）eg：/index"
+                            />
+                        </FormItem>
+                    </Form>
+                </div>
+                <div
+                    class="step"
+                    v-show="isChoose === '3'"
                 >
-                    <FormItem label="输入标签页">
-                        <Input
-                            v-model="tab.bqyName"
-                            placeholder="标签页名称"
-                        />
-                    </FormItem>
-                    <FormItem label="输入跳转路由">
-                        <Input
-                            v-model="tab.router"
-                            placeholder="（/ + 路由名称）eg：/index"
-                        />
-                    </FormItem>
-                </Form>
-            </div>
-            <div
-                class="step"
-                v-show="isChoose === '3'"
-            >
-                <Form
-                    :model="tab2"
-                    label-position="right"
-                    :label-width="100"
+                    <Form
+                        :model="tab2"
+                        label-position="right"
+                        :label-width="100"
+                    >
+                        <FormItem label="输入标签页">
+                            <Input
+                                type="textarea"
+                                :rows="6"
+                                v-model="tab2.bqyName"
+                                placeholder="标签页名称,用加号隔开。第一个是显示分类名称，eg：1234+1+2+3"
+                            />
+                        </FormItem>
+                        <FormItem label="输入跳转路由">
+                            <Input
+                                type="textarea"
+                                :rows="6"
+                                v-model="tab2.router"
+                                placeholder="（/ + 路由名称）eg：/index"
+                            />
+                        </FormItem>
+                    </Form>
+                </div>
+                <div
+                    class="step"
+                    v-show="isChoose === '4'"
                 >
-                    <FormItem label="输入标签页">
-                        <Input
-                            type="textarea"
-                            :rows="6"
-                            v-model="tab2.bqyName"
-                            placeholder="标签页名称,用加号隔开。第一个是显示分类名称，eg：1234+1+2+3"
-                        />
-                    </FormItem>
-                    <FormItem label="输入跳转路由">
-                        <Input
-                            type="textarea"
-                            :rows="6"
-                            v-model="tab2.router"
-                            placeholder="（/ + 路由名称）eg：/index"
-                        />
-                    </FormItem>
-                </Form>
-            </div>
-            <div
-                class="step"
-                v-show="isChoose === '4'"
-            >
-                <Form
-                    :model="btn"
-                    label-position="right"
-                    :label-width="100"
-                >
-                    <FormItem label="按钮名称">
-                        <Input
-                            v-model="btn.btnName"
-                            placeholder="请输入按钮名称。eg：注册"
-                        />
-                    </FormItem>
-                    <FormItem label="输入跳转路由">
-                        <Input
-                            v-model="btn.router"
-                            placeholder="标签页名称,eg：1234"
-                        />
-                    </FormItem>
-                </Form>
+                    <Form
+                        :model="btn"
+                        label-position="right"
+                        :label-width="100"
+                    >
+                        <FormItem label="按钮名称">
+                            <Input
+                                v-model="btn.btnName"
+                                placeholder="请输入按钮名称。eg：注册"
+                            />
+                        </FormItem>
+                        <FormItem label="输入跳转路由">
+                            <Input
+                                v-model="btn.router"
+                                placeholder="标签页名称,eg：1234"
+                            />
+                        </FormItem>
+                    </Form>
+                </div>
             </div>
             <div slot="footer">
                 <Button
                     type="primary"
+                    @click="next()"
+                    v-if="!isNext"
+                >
+                    下一步
+                </Button>
+                <Button
+                    @click="prey()"
+                    v-if="isNext"
+                >
+                    上一步
+                </Button>
+                <Button
+                    type="primary"
                     :loading="loading"
                     @click="importNav()"
+                    v-if="isNext"
                 >
                     确定
                 </Button>
@@ -176,6 +195,8 @@ export default class PageHead extends Vue {
 
     private choose: string = '1';
 
+    private id: number = 1;
+
     private tab: any = {
         bqyName: '',
         router: ''
@@ -191,10 +212,16 @@ export default class PageHead extends Vue {
         router: ''
     }
 
-    private addArray: any = [];
+    private addArray: any = {};
 
-    private resetNavModal(val: any) {
-        this.isChoose = '1';
+    private isNext: boolean = false;
+
+    private resetNavModal(type?: string) {
+        if (type) {
+            this.isChoose = type;
+        } else {
+            this.isChoose = '1';
+        }
         this.tab.bqyName = '';
         this.tab.router = '';
         this.tab2.bqyName = '';
@@ -206,10 +233,47 @@ export default class PageHead extends Vue {
 
     private chooseType(type: string) {
         this.isChoose = type;
+        this.resetNavModal(type);
     }
 
     private importNav () {
-        //
+        const that = this;
+        const text: any = [];
+        const route: any = [];
+        
+        that.addArray.id = that.id;
+        if (that.isChoose === '1') {
+            that.addArray.text = ['https://www.baidu.com/img/flexible/logo/pc/result.png'];
+            that.addArray.route = ['https://www.baidu.com/'];
+        } else if (that.isChoose === '2') {
+            text.push(that.tab.bqyName);
+            route.push(that.tab.router);
+            that.addArray.text = text;
+            that.addArray.route = route;
+        } else if (that.isChoose === '3') {
+            that.addArray.text = that.tab2.bqyName.split('+');
+            that.addArray.route = that.tab2.router.split('+');
+            console.log(that.addArray.text, that.addArray.route);
+        } else {
+            text.push(that.btn.btnName);
+            route.push(that.btn.router);
+            that.addArray.text = text;
+            that.addArray.route = route;
+            console.log(that.addArray);
+        }
+        that.addArray.status = Number(that.isChoose);
+        that.id += 1;
+        that.$emit('update-nav', that.addArray);
+        this.showModal = false;
+        this.isNext = false;
+    }
+
+    private next() {
+        this.isNext = true;
+    }
+
+    private prey() {
+        this.isNext = false;
     }
 
 }

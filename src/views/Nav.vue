@@ -42,31 +42,42 @@
 						v-for="(item, index) in editArray"
 					> <!-- 这里价格v-for遍历结果 -->
 						<EidtNav
+							@del="del($event)"
 							:text="item"
 						>
 						</EidtNav>
 					</div>
-
 					<Icon 
 						type="ios-add-circle-outline"
 						size="40"
 						color="rgb(61,92,237)"
 						class="addNav"
-						@click="showNavChooseModal"
+						@click="showNavChooseModal()"
 					/>
 				</div>
 				<div class="rightdh">
-					
 					<Icon 
 						type="ios-add-circle-outline"
 						size="40"
 						color="rgb(61,92,237)"
 						class="addNav"
+						@click="showNavChooseModal()"
 					/>
+					<div
+						:key="index"
+						v-for="(item, index) in editArray"
+					> <!-- 这里价格v-for遍历结果 -->
+						<EidtNav
+							@del="del($event)"
+							:text="item"
+						>
+						</EidtNav>
+					</div>
 				</div>
 			</div>
 			<ShowNavChooseModal
 				:show.sync="show"
+				@update-nav="updateNav($event)"
 			>
 			</ShowNavChooseModal>
 		</div>
@@ -90,32 +101,25 @@ import ShowNavChooseModal from '@/views/componets/ShowNavChooseModal.vue';
 export default class Personal extends Vue {
 	private headName: string = "页面导航";
 
-	private editArray: any = [
-		{
-			id: 110,
-			status: 2,
-			text: ['1234']
-		},
-		{
-			id: 111,
-			status: 3,
-			text: ['1234','1','2','3','4']
-		}
-	];
+	private editArray: any = [];
 
 	private show: boolean = false;
 
-	private mounted () {
-		const editObj: any = {}
-		editObj.status = 1;
-		editObj.text = []
-
-		this.editArray.push(editObj);
-		console.log(this.editArray);
+	private showNavChooseModal(where: any) {
+		this.show = true;
 	}
 
-	private showNavChooseModal() {
-		this.show = true;
+	private del(msg: any) {
+		for(const item in this.editArray){
+			if (this.editArray[item].id === msg) {
+				this.editArray.splice(item,1);
+			}
+		}
+	}
+
+	private updateNav (msg: any) {
+		this.editArray.push(msg);
+		console.log(msg, this.editArray)
 	}
 }
 </script>
