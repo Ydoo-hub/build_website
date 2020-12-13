@@ -173,6 +173,9 @@ export default class PageHead extends Vue {
     @Prop({ default: "xxx" })
     private show!: boolean;
 
+    @Prop({ default: "xxx" })
+    private where!: string;
+
     @Watch('showModal')
     private closeModal(val: boolean) {
         const that = this;
@@ -262,7 +265,9 @@ export default class PageHead extends Vue {
             console.log(that.addArray);
         }
         that.addArray.status = Number(that.isChoose);
+        that.addArray.where = that.where;
         that.id += 1;
+        console.log(that.addArray);
         that.$emit('update-nav', that.addArray);
         this.showModal = false;
         this.isNext = false;

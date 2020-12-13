@@ -9,7 +9,7 @@
                 type="ios-close-circle-outline"
                 class="del"
                 @click="delNav()"
-            />
+            />  
         </div>
         <div 
             class="border"
@@ -96,7 +96,7 @@ export default class EditNav extends Vue {
     .border {
         padding: 3px 8px;
         border: 1px solid #cccccc;
-        margin: 0px 5px;
+        margin: 0px 10px;
         margin-top: 20px;
         position: relative;
         border-radius: 6px;
@@ -111,7 +111,7 @@ export default class EditNav extends Vue {
     .borderImg {
         padding: 3px 8px;
         border: 1px solid #cccccc;
-        margin-right: 10px;
+        margin: 0 10px;
         position: relative;
         border-radius: 6px;
         height: 66px;

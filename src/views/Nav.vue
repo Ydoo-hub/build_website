@@ -44,6 +44,7 @@
 						<EidtNav
 							@del="del($event)"
 							:text="item"
+							v-if ="item.where === 'left'"
 						>
 						</EidtNav>
 					</div>
@@ -52,7 +53,7 @@
 						size="40"
 						color="rgb(61,92,237)"
 						class="addNav"
-						@click="showNavChooseModal()"
+						@click="showNavChooseModal('left')"
 					/>
 				</div>
 				<div class="rightdh">
@@ -61,15 +62,16 @@
 						size="40"
 						color="rgb(61,92,237)"
 						class="addNav"
-						@click="showNavChooseModal()"
+						@click="showNavChooseModal('right')"
 					/>
 					<div
 						:key="index"
 						v-for="(item, index) in editArray"
-					> <!-- 这里价格v-for遍历结果 -->
+					>
 						<EidtNav
 							@del="del($event)"
 							:text="item"
+							v-if ="item.where === 'right'"
 						>
 						</EidtNav>
 					</div>
@@ -77,10 +79,17 @@
 			</div>
 			<ShowNavChooseModal
 				:show.sync="show"
+				:where="where"
 				@update-nav="updateNav($event)"
 			>
 			</ShowNavChooseModal>
 		</div>
+		<Button
+			type="primary"
+			class="save"
+		>
+			保存
+		</Button>
   </div>
 </template>
 <script lang="ts">
@@ -105,7 +114,10 @@ export default class Personal extends Vue {
 
 	private show: boolean = false;
 
-	private showNavChooseModal(where: any) {
+	private where: string = 'left';
+
+	private showNavChooseModal(where: string) {
+		this.where = where;
 		this.show = true;
 	}
 
@@ -119,7 +131,7 @@ export default class Personal extends Vue {
 
 	private updateNav (msg: any) {
 		this.editArray.push(msg);
-		console.log(msg, this.editArray)
+		this.editArray = JSON.parse(JSON.stringify(this.editArray));
 	}
 }
 </script>
@@ -191,6 +203,11 @@ export default class Personal extends Vue {
 			margin-top: 13px;
 			cursor: pointer;
 		}
+	}
+	.save {
+		position: fixed;
+		bottom: 20px;
+		left: calc(50% + 60px);
 	}
 }
 </style>
