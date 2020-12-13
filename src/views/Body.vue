@@ -5,22 +5,21 @@
 		>
 		</PageHead>
 		<h3> 选择你需要编辑的页面： </h3>
-		<div
+	  	<div 
 			:key="index"
 			v-for="(item, index) in pageArray"
+			class="urls"
 		>
-			<div>
-				<img src="https://www.baidu.com/img/flexible/logo/pc/result.png">
-			</div>
-			<div>
-				<a></a>
-			</div>
-			<div>
-				<!-- 下拉列表 -->
-			</div>
-			<div>
-				<!-- 按钮 -->
-			</div>
+			<span
+				class="spanlist"
+				@click="choosePage()"
+				:class="{'isChoose': item.id === chooseID}"
+			>
+				{{item.route}}
+				<!-- <span
+					v-if
+				> </span> -->
+			</span>
 		</div>
 	</div>
 </template>
@@ -36,18 +35,32 @@ import PageHead from '@/views/componets/pageHead.vue';
   },
 })
 export default class Body extends Vue {
-	private headName = '主体部分';
+	private headName: string = '主体部分';
+
+	private chooseID: number = 1;
 
 	private pageArray: any = [
 		{
+			id: 1,
 			status: 2,
 			text: ['11'],
+			route: ['/11']
 		},
 		{
+			id: 2,
 			status: 3,
 			text: ['数字','11','22','33'],
+			route: ['/11', '/22' , '/22']
 		},
-	]
+	];
+
+	private mounted() {
+		this.getPageInfo;
+	}
+
+	private getPageInfo() {
+
+	}
 }
 </script>
 <style lang="scss">
@@ -56,6 +69,18 @@ export default class Body extends Vue {
 		margin-left: 5%;
 		margin-bottom: 10px;
 		text-align: left;
+	}
+	.urls {
+		display: flex;
+		margin-left: 5%;
+		.spanlist {
+			border: 1px solid #cccccc;
+			padding: 3px 8px;
+			margin: 0px 10px;
+		}
+		.isChoose {
+			box-shadow:0px 0px 3px 3px skyblue;
+		}
 	}
 }
 
